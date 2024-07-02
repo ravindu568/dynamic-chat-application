@@ -1,13 +1,14 @@
-const express=require('express');
-const user_routes=express();
+const express= require('express');
+const user_routes=express.Router();
 
-const bodyParser=require('body-parser');
+// const session=require('express-session');
+// const {SESSION_SECRET}=process.env;
+// user_routes.use(session({secret:SESSION_SECRET}));
 
-user_routes.use(bodyParser.json());
-user_routes.use(bodyParser.urlencoded({extend:true}));
+user_routes.use(express.json());
+user_routes.use(express.urlencoded({ extended: true }));
 
-user_routes.set('view engine','ejs');
-user_routes.set('views','./views');
+
 
 user_routes.use(express.static('public'));
 
@@ -27,12 +28,14 @@ const storage=multer.diskStorage({
 
 const upload=multer({storage:storage});
 
-const userController=require('controllers/userController');
+const userController=require('../controllers/userController');
 
 
 user_routes.get('/register',userController.registerLoad);
-user_routes.post('/register',upload.single(image),userController.register);
+user_routes.post('/register',upload.single('image'),userController.register);
 
+// user_routes.get('/',userController.loadLogin);
+// user_routes.post('/',userController.load);
 
 
 module.exports=user_routes;
