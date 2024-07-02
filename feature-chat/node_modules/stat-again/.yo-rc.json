@@ -1,0 +1,13 @@
+{
+  "generator-wupjs": {
+    "module": "stat-again",
+    "description": "Helper for running tests interacting with the file system: It should happen, but when? So stat again!",
+    "author": "Jason Lenoble",
+    "email": "jason.lenoble@gmail.com",
+    "github": "jlenoble",
+    "license": "MIT",
+    "transpile": "es2015",
+    "addons": [],
+    "Class": "StatAgain"
+  }
+}
