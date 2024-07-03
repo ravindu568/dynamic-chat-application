@@ -41,8 +41,70 @@ try {
 }
 }
 
+const loadLogin=async (req,res)=>{
+    try {
+        res.render('login');
+        
+    }catch (e) {
+        console.log(e.message);
+    }
+
+}
+
+const login=async (req,res)=>{
+    try {
+       
+        const email=req.body.email;
+        const password=req.body.password;
+
+        const userData=await User.findOne({email:email});
+
+        if(userData){
+
+            const passwordMatch= bcrypt.compare(password,userData.password);
+                if(passwordMatch){
+                            req.session.user=userData;
+                            res.redirect('/dashboard');
+                }else{
+                    res.render('login',{message:'Email and Password Incorrect!'});
+                }
+
+        }else{
+            res.render('login',{message:'Email or passsword are incorrect'});
+        }
+    }catch (e) {
+        console.log(e.message);
+    }
+
+}
+
+const loadDashboard=async (req,res)=>{
+    try {
+       res.render('dashboard',{user:req.session.user});
+        
+    }catch (e) {
+        console.log(e.message);
+    }
+
+}
+
+const logout=async (req,res)=>{
+    try {
+       req.session.destroy();
+       res.redirect('/')
+        
+    }catch (e) {
+        console.log(e.message);
+    }
+
+}
+
 
 module.exports={
     register,
-    registerLoad
+    registerLoad,
+    loadDashboard,
+    login,
+    loadLogin,
+    logout
 }
