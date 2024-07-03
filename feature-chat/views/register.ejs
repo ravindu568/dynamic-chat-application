@@ -3,7 +3,12 @@
 
 <h1>Register Form</h1>
 
-
+<% if (typeof message!== 'undefined'){
+    %>
+    <p style="color: green;"><% message %></p>
+    <%
+} 
+%>
 
 <form action="" method="post" enctype="multipart/form-data">
 
@@ -27,11 +32,6 @@
 
 
 </form>
-<% if (typeof message!== 'undefined'){
-    %>
-    <p style="color: green;"><% message %></p>
-    <%
-} 
-%>
+
 
 

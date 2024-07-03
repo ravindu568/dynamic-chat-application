@@ -61,7 +61,7 @@ const login=async (req,res)=>{
 
         if(userData){
 
-            const passwordMatch= bcrypt.compare(password,userData.password);
+            const passwordMatch= await bcrypt.compare(password,userData.password);
                 if(passwordMatch){
                             req.session.user=userData;
                             res.redirect('/dashboard');
