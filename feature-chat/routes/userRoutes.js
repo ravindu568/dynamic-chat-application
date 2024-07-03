@@ -4,6 +4,8 @@ const user_routes=express.Router();
 const session=require('express-session');
 const {SESSION_SECRET}=process.env;
 
+const auth=require('../middle/auth');
+
 user_routes.use(session({
     secret: SESSION_SECRET,
     resave: false, // Provide resave option
@@ -37,14 +39,14 @@ const upload=multer({storage:storage});
 const userController=require('../controllers/userController');
 
 
-user_routes.get('/register',userController.registerLoad);
+user_routes.get('/register',auth.isLogOut,userController.registerLoad);
 user_routes.post('/register',upload.single('image'),userController.register);
 
-user_routes.get('/',userController.loadLogin);
+user_routes.get('/',auth.isLogOut,userController.loadLogin);
 user_routes.post('/',userController.login);
-user_routes.get('/logout',userController.logout);
+user_routes.get('/logout',auth.isLogIn,userController.logout);
 
-user_routes.get('/dashboard',userController.loadDashboard);
+user_routes.get('/dashboard',auth.isLogIn,userController.loadDashboard);
 
 user_routes.get('*', function (req, res) {
     res.render('/'); // Redirect to home or a 404 page
