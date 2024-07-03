@@ -1,9 +1,15 @@
 const express= require('express');
 const user_routes=express.Router();
 
-// const session=require('express-session');
-// const {SESSION_SECRET}=process.env;
-// user_routes.use(session({secret:SESSION_SECRET}));
+const session=require('express-session');
+const {SESSION_SECRET}=process.env;
+
+user_routes.use(session({
+    secret: SESSION_SECRET,
+    resave: false, // Provide resave option
+    saveUninitialized: true, // Provide saveUninitialized option
+    cookie: { secure: false } // Set to true if using https
+  }));
 
 user_routes.use(express.json());
 user_routes.use(express.urlencoded({ extended: true }));
@@ -34,8 +40,18 @@ const userController=require('../controllers/userController');
 user_routes.get('/register',userController.registerLoad);
 user_routes.post('/register',upload.single('image'),userController.register);
 
-// user_routes.get('/',userController.loadLogin);
-// user_routes.post('/',userController.load);
+user_routes.get('/',userController.loadLogin);
+user_routes.post('/',userController.login);
+user_routes.get('/logout',userController.logout);
+
+user_routes.get('/dashboard',userController.loadDashboard);
+
+user_routes.get('*', function (req, res) {
+    res.render('/'); // Redirect to home or a 404 page
+  });
+
+
+
 
 
 module.exports=user_routes;
