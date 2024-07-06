@@ -30,10 +30,10 @@ try {
 
     res.render('register',{mesage:'Your Registration Successfully done!'});
 
-    console.log(user.name);
-    console.log(user.email);
-    console.log(user.password);
-    console.log(user.image);
+    // console.log(user.name);
+    // console.log(user.email);
+    // console.log(user.password);
+    // console.log(user.image);
 
 
 }catch (e) {
@@ -51,7 +51,7 @@ const loadLogin=async (req,res)=>{
 
 }
 
-const login=async (req,res)=>{
+const login= async (req,res)=>{
     try {
        
         const email=req.body.email;
@@ -80,7 +80,9 @@ const login=async (req,res)=>{
 
 const loadDashboard=async (req,res)=>{
     try {
-       res.render('dashboard',{user:req.session.user});
+
+       const users=await User.find({ _id: {$nin : [req.session.user._id]}});
+       res.render('dashboard',{user:req.session.user,users:users});
         
     }catch (e) {
         console.log(e.message);
