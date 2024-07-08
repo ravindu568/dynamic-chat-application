@@ -25,32 +25,18 @@ usp.on('connection',async function(socket){
 
     var userId=socket.handshake.auth.token;
 
-    await User.findByIdAndUpdate({_id: userId},{$set:{is_online:'1' }});
+    console.log(userId);
+
+    await User.findByIdAndUpdate({_id: userId},{$set:{is_Online:'1' }});
 
     socket.on('disconnect',async function(){
             console.log('User Disconnected');
 
             var userId=socket.handshake.auth.token;
 
-            await User.findByIdAndUpdate({_id: userId},{$set:{is_online:'0' }});
+            await User.findByIdAndUpdate({_id: userId},{$set:{is_Online:'0' }});
     });
 });
-
-// const { createServer } = require("http");
-// const { Server } = require("socket.io");
-
-// const httpServer = createServer(app);
-// const io = new Server(httpServer,{});
-
-// io.of("connection", (socket) => {
-//     console.log('User Connected');
-
-//     socket.on('disconnect',function(){
-//         console.log('User Disconnected');
-//     })
-// });
-
-
 
 
 app.use('/',userRoutes);

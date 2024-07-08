@@ -38,11 +38,11 @@
 
 <script>
 
-    var sender_id='<%=user.__id %>';
+    var sender_id='<%=user._id %>';
 
     var socket=io('/user-namespace',{
         auth:{
-            token: sender_id
+            token: '<%=user._id %>'
         }
     });
     
