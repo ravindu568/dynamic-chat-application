@@ -8347,3 +8347,29 @@ a[data-toggle="collapse"] {
 .chat-section{
   display: none;
 }
+
+.user-online{
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  border-radius: 100%;
+}
+
+.user-offline{
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 100%;
+}
+
+.current-user-chat{
+text-align: right;
+margin:10px;
+color: black;
+}
+
+.distance-user-chat{
+  text-align: left;
+  margin:10px;
+  color: blue;
+  }
