@@ -48,6 +48,8 @@ user_routes.get('/logout',auth.isLogIn,userController.logout);
 
 user_routes.get('/dashboard',auth.isLogIn,userController.loadDashboard);
 
+user_routes.post('/save-chat',userController.saveChat);
+
 user_routes.get('*', function (req, res) {
     res.render('/'); // Redirect to home or a 404 page
   });

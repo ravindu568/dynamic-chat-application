@@ -25,18 +25,24 @@ usp.on('connection',async function(socket){
 
     var userId=socket.handshake.auth.token;
 
-    console.log(userId);
-
     await User.findByIdAndUpdate({_id: userId},{$set:{is_Online:'1' }});
 
+    //user online broadcast
+    socket.broadcast.emit('getOnlineUser',{user_Id:userId});
+
     socket.on('disconnect',async function(){
-            console.log('User Disconnected');
 
             var userId=socket.handshake.auth.token;
 
             await User.findByIdAndUpdate({_id: userId},{$set:{is_Online:'0' }});
+
+            //broadcast user offline status
+
+            socket.broadcast.emit('getOfflineUser',{user_Id:userId});
+
     });
 });
+
 
 
 app.use('/',userRoutes);
