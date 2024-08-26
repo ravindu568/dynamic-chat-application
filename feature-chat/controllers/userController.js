@@ -79,7 +79,7 @@ const login= async (req,res)=>{
 
 }
 
-const loadDashboard=async (req,res)=>{
+const loadDashboard = async (req,res)=>{
     try {
 
        const users=await User.find({ _id: {$nin : [req.session.user._id]}});
@@ -91,7 +91,7 @@ const loadDashboard=async (req,res)=>{
 
 }
 
-const logout=async (req,res)=>{
+const logout= async (req,res)=>{
     try {
        req.session.destroy();
        res.redirect('/')
@@ -102,22 +102,27 @@ const logout=async (req,res)=>{
 
 }
 
-const saveChat=async(req,res)=>{
+const saveChat= async (req,res)=>{
 
-try{
+            try{
 
-    var chat=new Chat({
-        sender_id:req.body.sender_id,
-        receiver_id:req.body.receiver_id,
-        message:req.body.mesage,
-        });
+                console.log('correct');
 
-    var newChat=await chat.save();
-    res.status(200).send({succes:true,msg:'Chat inserted',data:newChat});
+                var chat=new Chat({
+                    sender_id:req.body.sender_id,
+                    receiver_id:req.body.receiver_id,
+                    message:req.body.mesage,
+                    });
 
-}catch(error){
-    res.status(400).send({succes:false,msg:error.mesage} );
-}
+                var newChat = await chat.save();
+                res.status(200).send({succes:true,msg:'Chat inserted',data:newChat});
+
+                }catch(error){
+
+
+                res.status(400).send({succes:false,msg:error.mesage} );
+                 
+                }
 
 }
 
