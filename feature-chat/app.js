@@ -41,7 +41,15 @@ usp.on('connection',async function(socket){
             socket.broadcast.emit('getOfflineUser',{user_Id:userId});
 
     });
+
+    //chatting implementation
+
+    socket.on('newChat',(data)=>{
+        socket.broadcast.emit('loadNewChat',data);
+    })
 });
+
+
 
 
 
